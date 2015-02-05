@@ -1,8 +1,10 @@
 define [
   'underscore'
   'backbone'
-  'models/Building-model'
+  'models/building'
 ], (_, Backbone, BuildingModel) ->
-
-  class BuildingCollection extends Backbone.Collection
-    model: BuildingModel
+  'use strict'
+  BuildingCollection = Backbone.Collection.extend(
+    url: '/buildings'
+    model: BuildingModel)
+  BuildingCollection

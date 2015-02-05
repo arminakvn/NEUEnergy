@@ -4,14 +4,8 @@ define [
 ], (_, Backbone) ->
   'use strict';
 
-  class BuildingModel extends Backbone.Model
-    url: '',
-
-    initialize: () ->
-
-    defaults: {}
-
-    validate: (attrs, options) ->
-
-    parse: (response, options) ->
-      response
+  BuildingModel = Backbone.Model.extend(
+    urlRoot: '/buildings'
+    idAttribute: '_id'
+    defaults: {})
+  BuildingModel

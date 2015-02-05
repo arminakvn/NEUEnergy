@@ -6,13 +6,13 @@ define [
   'use strict'
   BuildingRouter = Backbone.Router.extend(routes:
     'buildings': 'viewBuildings')
-  # buildingListView = new BuildingListView
+  buildingView = new BuildingView
 
   initialize = ->
     router = new BuildingRouter
     router.on 'route:viewBuildings', ->
       console.log "somethinfg"
-      # buildingListView.render()
+      buildingView.render()
       return
     console.log 'initializing the backbone history'
     Backbone.history.start()
