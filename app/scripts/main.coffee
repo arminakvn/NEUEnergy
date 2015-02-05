@@ -3,6 +3,9 @@
 
 require.config
   shim: {
+    leaflet: {
+      exports: 'L'
+    }
     bootstrap:
       deps: ['jquery'],
       exports: 'jquery'
@@ -12,6 +15,7 @@ require.config
     backbone: '../bower_components/backbone/backbone'
     underscore: '../bower_components/lodash/dist/lodash'
     bootstrap: '../bower_components/sass-bootstrap/dist/js/bootstrap'
+    leaflet: '../bower_components/mapbox.js/mapbox'
 require [ 'app' ], (App) ->
   # Initialize our application.
   # fossa = new Fossa(

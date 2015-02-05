@@ -69,10 +69,33 @@ var BuildingSchema = new Schema({
 	Outline: [Number]
 
 }, {collection: 'buildingdb'});
+var MeasurmentSchema = new Schema({
+	_id: Schema.Types.ObjectId,
+  	Perimeter: { type: Number},
+	Name: String,
+	Area:{ type: Number},
+	bID: { type: Number},
+	Year_Acquired: String,
+	Floors:{ type: Number},
+	Centroid: [String],
+	Footprint: {type: Number},
+	Primary_Use: String,
+	Outline: [Number]
+
+}, {collection: 'buildingdb'});
 
 mongoose.model('Building', BuildingSchema);
+mongoose.model('Measurment', MeasurmentSchema);
 
 Building = mongoose.model('Building');
+
+exports.findAll = function(req, res){
+  res.header("Access-Control-Allow-Origin", "*"); 
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  Building.find({},function(err, results) {
+    return res.send(results);
+  });
+};
 
 exports.findAll = function(req, res){
   res.header("Access-Control-Allow-Origin", "*"); 
@@ -90,6 +113,13 @@ app.get('/buildings', function (req, res) {
 	res.header("Access-Control-Allow-Origin", "*"); 
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     Building.find({}, function (err, docs) {
+        res.json(docs);
+    });
+});
+app.get('/measurments', function (req, res) {
+	res.header("Access-Control-Allow-Origin", "*"); 
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    Measurments.find({}, function (err, docs) {
         res.json(docs);
     });
 });

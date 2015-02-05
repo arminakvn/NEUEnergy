@@ -2,10 +2,11 @@ define [
   'jquery'
   'underscore'
   'backbone'
+  'leaflet'
   'templates'
   'collections/building'
   'models/building'
-], ($, _, Backbone, JST, BuildingCollection, BuildingModel) ->
+], ($, _, Backbone, L, JST, BuildingCollection, BuildingModel) ->
   'use strict'
   BuildingView = Backbone.View.extend(
     template: JST['app/scripts/templates/building.hbs']
@@ -24,12 +25,12 @@ define [
     #   return
     initialize: () ->
       # @listenTo @model, 'change', @render
-      console.log "@model", @model
-      # L.mapbox.accessToken = "pk.eyJ1IjoiYXJtaW5hdm4iLCJhIjoiSTFteE9EOCJ9.iDzgmNaITa0-q-H_jw1lJw"
-      # map = L.mapbox.map("map", "arminavn.l00353h2").setView([
-      #   42.34
-      #   -71.09
-      # ], 16)
+      # console.log "@collection", @collection
+      L.mapbox.accessToken = "pk.eyJ1IjoiYXJtaW5hdm4iLCJhIjoiSTFteE9EOCJ9.iDzgmNaITa0-q-H_jw1lJw"
+      map = L.mapbox.map("map", "arminavn.l00353h2").setView([
+        42.34
+        -71.09
+      ], 16)
     render: ->
       buildings = new BuildingCollection
       that = this
