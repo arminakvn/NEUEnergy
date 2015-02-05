@@ -70,6 +70,14 @@ var BuildingSchema = new Schema({
 
 }, {collection: 'buildingdb'});
 
+var SiteSchema = new Schema({
+  _id: Schema.Types.ObjectId,
+  Abbreviation: String,
+  bID: { type: Number},
+  Name: String,
+  sID: {type: Number}
+}, {collection: 'sitedb'});
+
 var MeasurmentParallelSchema = new Schema({
 	_id: Schema.Types.ObjectId,
   	timestamp: { type: Date }
@@ -79,7 +87,7 @@ var MeasurmentSerialSchema = new Schema({
 	_id: Schema.Types.ObjectId,
   	timestamp: { type: Date },
   	value: {type: Number},
-  	sID: {type: Number}
+  	
 }, {collection: 'measurementdb_serial'});
 
 mongoose.model('Building', BuildingSchema);
