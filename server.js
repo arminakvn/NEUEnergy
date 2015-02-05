@@ -69,25 +69,26 @@ var BuildingSchema = new Schema({
 	Outline: [Number]
 
 }, {collection: 'buildingdb'});
-var MeasurmentSchema = new Schema({
-	_id: Schema.Types.ObjectId,
-  	Perimeter: { type: Number},
-	Name: String,
-	Area:{ type: Number},
-	bID: { type: Number},
-	Year_Acquired: String,
-	Floors:{ type: Number},
-	Centroid: [String],
-	Footprint: {type: Number},
-	Primary_Use: String,
-	Outline: [Number]
 
-}, {collection: 'buildingdb'});
+var MeasurmentParallelSchema = new Schema({
+	_id: Schema.Types.ObjectId,
+  	timestamp: { type: Date }
+}, {collection: 'measurementdb_parallel'});
+
+var MeasurmentSerialSchema = new Schema({
+	_id: Schema.Types.ObjectId,
+  	timestamp: { type: Date },
+  	value: {type: Number},
+  	sID: {type: Number}
+}, {collection: 'measurementdb_serial'});
 
 mongoose.model('Building', BuildingSchema);
-mongoose.model('Measurment', MeasurmentSchema);
+mongoose.model('MeasurmentParallel', MeasurmentParallelSchema);
+mongoose.model('MeasurmentSerial', MeasurmentSerialSchema);
 
 Building = mongoose.model('Building');
+MeasurmentParallel = mongoose.model('MeasurmentParallel');
+MeasurmentSerial = mongoose.model('MeasurmentSerial');
 
 exports.findAll = function(req, res){
   res.header("Access-Control-Allow-Origin", "*"); 
@@ -100,7 +101,7 @@ exports.findAll = function(req, res){
 exports.findAll = function(req, res){
   res.header("Access-Control-Allow-Origin", "*"); 
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  Building.find({},function(err, results) {
+  MeasurmentSerial.find({},function(err, results) {
     return res.send(results);
   });
 };
@@ -116,11 +117,13 @@ app.get('/buildings', function (req, res) {
         res.json(docs);
     });
 });
-app.get('/measurments', function (req, res) {
+app.get('/measurments/:sid', function (req, res) {
+	concole.log("say at least");
 	res.header("Access-Control-Allow-Origin", "*"); 
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    Measurments.find({}, function (err, docs) {
-        res.json(docs);
+    MeasurmentSerial.findById(req.params.id, function (err, docs) {
+	    if (err) return next(err);
+	    res.json(docs);
     });
 });
 exports.import = function(req, res){

@@ -6,7 +6,7 @@ define [
 
   BuildingModel = Backbone.Model.extend(
     # server should serve this through a GET function
-    urlRoot: '//localhost:3001/buildings'
+    urlRoot: '//127.0.0.1:3001/buildings'
     idAttribute: '_id'
     defaults: {})
   BuildingModel
