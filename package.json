@@ -22,6 +22,7 @@
     "grunt-contrib-jst": "^0.6.0",
     "grunt-contrib-uglify": "^0.6.0",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-express-server": "^0.4.17",
     "grunt-mocha": "^0.4.11",
     "grunt-mongo-bin": "^0.1.0",
     "grunt-open": "^0.2.3",
@@ -31,6 +32,9 @@
     "jshint-stylish": "^1.0.0",
     "load-grunt-tasks": "^0.6.0",
     "mongobackup": "^0.1.8",
+    "mongojs": "^0.18.1",
+    "restify": "^2.8.5",
+    "supertest": "latest",
     "time-grunt": "^1.0.0"
   },
   "engines": {

@@ -5,6 +5,6 @@ define [
 ], (_, Backbone, BuildingModel) ->
   'use strict'
   BuildingCollection = Backbone.Collection.extend(
-    url: '/buildings'
+    url: '//localhost:3001/buildings/'
     model: BuildingModel)
   BuildingCollection

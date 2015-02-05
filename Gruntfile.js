@@ -44,6 +44,29 @@ module.exports = function (grunt) {
                 out: './dump/' + Date.now()
             }
           },
+        express: {
+            options: {
+                port: 3000,
+                node_env: 'development'
+            },
+            dev: {
+                options: {
+                    script: 'app.js',
+                    node_env: 'development'
+                }
+            },
+            prod: {
+                options: {
+                    script: 'app.js',
+                    node_env: 'production'
+                }   
+            },
+            open: {
+              server: {
+                url: 'http://localhost:<%= express.options.port %>'
+              }
+            }
+          },
         watch: {
             options: {
                 nospawn: true,
@@ -83,7 +106,14 @@ module.exports = function (grunt) {
             test: {
                 files: ['<%= yeoman.app %>/scripts/{,*/}*.js', 'test/spec/**/*.js'],
                 tasks: ['test:true']
-            }
+            },
+            express: {
+                files:  [ '*.js','routes/*.js', 'models/*.js', 'config/*.js' ],
+                tasks:  [ 'express:dev' ],
+                options: {
+                  spawn: false // Without this option specified express won't be reloaded
+                }
+              }
         },
         connect: {
             options: {
@@ -329,9 +359,12 @@ module.exports = function (grunt) {
         grunt.file.write('.tmp/scripts/templates.js', 'this.JST = this.JST || {};');
     });
 
-    grunt.registerTask('server', function (target) {
-        grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-        grunt.task.run(['serve' + (target ? ':' + target : '')]);
+    grunt.registerTask('server', function (arg) {
+        if (arg && arg === 'prod') {
+            grunt.task.run(['express:prod', 'open', 'watch']);
+        } else {
+            grunt.task.run(['express:dev', 'open', 'watch']);
+        }
     });
 
     grunt.registerTask('serve', function (target) {
@@ -384,6 +417,7 @@ module.exports = function (grunt) {
             return grunt.task.run(testTasks);
         }
     });
+    grunt.loadNpmTasks('grunt-express');
 
     grunt.registerTask('build', [
         'clean:dist',
@@ -391,16 +425,16 @@ module.exports = function (grunt) {
         'createDefaultTemplate',
         'jst',
         'compass:dist',
-        'useminPrepare',
+        // 'useminPrepare',
         'requirejs',
         'imagemin',
         'htmlmin',
         'concat',
         'cssmin',
-        'uglify',
+        // 'uglify',
         'copy',
-        'rev',
-        'usemin'
+        'rev'
+        // 'usemin'
     ]);
 
     grunt.registerTask('default', [
@@ -408,4 +442,5 @@ module.exports = function (grunt) {
         'test',
         'build'
     ]);
+    grunt.registerTask('myServer', ['express', 'express-keepalive']);
 };

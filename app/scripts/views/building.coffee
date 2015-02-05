@@ -23,18 +23,19 @@ define [
     #     return
     #   return
     initialize: () ->
-      @listenTo @model, 'change', @render
-      L.mapbox.accessToken = "pk.eyJ1IjoiYXJtaW5hdm4iLCJhIjoiSTFteE9EOCJ9.iDzgmNaITa0-q-H_jw1lJw"
-      map = L.mapbox.map("map", "arminavn.l00353h2").setView([
-        42.34
-        -71.09
-      ], 16)
+      # @listenTo @model, 'change', @render
+      console.log "@model", @model
+      # L.mapbox.accessToken = "pk.eyJ1IjoiYXJtaW5hdm4iLCJhIjoiSTFteE9EOCJ9.iDzgmNaITa0-q-H_jw1lJw"
+      # map = L.mapbox.map("map", "arminavn.l00353h2").setView([
+      #   42.34
+      #   -71.09
+      # ], 16)
     render: ->
       buildings = new BuildingCollection
       that = this
       buildings.fetch
         success: (data) ->
-          console.log 'Found buildings = ' + data
+          console.log 'Found buildings = ' + data.toJSON()
           that.$el.html that.template(buildings: data.toJSON())
           this
         error: (model, xhr, options) ->
