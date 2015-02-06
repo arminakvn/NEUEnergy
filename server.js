@@ -93,10 +93,12 @@ var MeasurmentSerialSchema = new Schema({
 mongoose.model('Building', BuildingSchema);
 mongoose.model('MeasurmentParallel', MeasurmentParallelSchema);
 mongoose.model('MeasurmentSerial', MeasurmentSerialSchema);
+mongoose.model('Site', SiteSchema);
 
 Building = mongoose.model('Building');
 MeasurmentParallel = mongoose.model('MeasurmentParallel');
 MeasurmentSerial = mongoose.model('MeasurmentSerial');
+Site = mongoose.model('Site');
 
 exports.findAll = function(req, res){
   res.header("Access-Control-Allow-Origin", "*"); 
@@ -117,6 +119,14 @@ exports.findById = function() {};
 exports.add = function() {};
 exports.update = function() {};
 exports.delete = function() {};
+
+app.get('/sites', function (req, res) {
+  res.header("Access-Control-Allow-Origin", "*"); 
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    Site.find({}, function (err, docs) {
+        res.json(docs);
+    });
+});
 
 app.get('/buildings', function (req, res) {
 	res.header("Access-Control-Allow-Origin", "*"); 

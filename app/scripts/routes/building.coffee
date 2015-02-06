@@ -11,7 +11,7 @@ define [
   initialize = ->
     router = new BuildingRouter
     router.on 'route:viewBuildings', ->
-      console.log "somethinfg"
+      console.log "inside the building router", "@", @
       buildingView.render()
       return
     console.log 'initializing the backbone history'

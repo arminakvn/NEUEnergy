@@ -33,6 +33,16 @@ npm install -g grunt-cli
 ```
 
 fork and clone the repo to your local and cd into it.
+
+install the packeges:
+```
+npm install
+```
+and then
+```
+bower install
+``` 
+
 run the grunt tasks with:
 ```
 grunt
