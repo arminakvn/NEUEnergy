@@ -70,6 +70,10 @@ var BuildingSchema = new Schema({
 
 }, {collection: 'buildingdb'});
 
+BuildingSchema.methods.findSimilarTypes = function (cb) {
+  return this.model('Building').find({ bID: this.bID }, cb);
+}
+
 var SiteSchema = new Schema({
   _id: Schema.Types.ObjectId,
   Abbreviation: String,
@@ -135,7 +139,52 @@ app.get('/buildings', function (req, res) {
         res.json(docs);
     });
 });
-app.get('/measurments/:sid', function (req, res) {
+app.get('/buildings/:id', function (req, res) {
+  console.log("id", req.params.id);
+  res.header("Access-Control-Allow-Origin", "*"); 
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  var building = new Building({bID: req.params.id});
+  building.findSimilarTypes(function (err, building) {
+    console.log(building[0]["_id"]); // woof
+    Building.findById(building[0]["_id"], function (err, docs) {
+    if (!err) {
+      return res.send(docs);
+    } else {
+      return console.log(err);
+    }
+    });
+  });
+  
+});
+// app.param('building', function(req, res, next, id) {
+
+//   // try to get the user details from the User model and attach it to the request object
+//   Building.find(id, function(err, user) {
+//     if (err) {
+//       next(err);
+//     } else if (building) {
+//       req.building = building;
+//       next();
+//     } else {
+//       next(new Error('failed to load building'));
+//     }
+//   });
+// });
+// app.param('id', function (req, res, next, id) {
+//   console.log('CALLED ONLY ONCE');
+//   next();
+// })
+
+// app.get('/building/:id', function (req, res, next) {
+//   console.log('although this matches');
+//   next();
+// });
+
+// app.get('/building/:id', function (req, res) {
+//   console.log('and this matches too');
+//   res.end();
+// });
+app.get('/measurments/:id', function (req, res) {
 	concole.log("say at least");
 	res.header("Access-Control-Allow-Origin", "*"); 
     res.header("Access-Control-Allow-Headers", "X-Requested-With");

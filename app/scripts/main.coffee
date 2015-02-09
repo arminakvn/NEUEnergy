@@ -16,12 +16,8 @@ require.config
     underscore: '../bower_components/lodash/dist/lodash'
     bootstrap: '../bower_components/sass-bootstrap/dist/js/bootstrap'
     leaflet: '../bower_components/mapbox.js/mapbox'
+    d3: '../bower_components/d3/d3'
 require [ 'app' ], (App) ->
-  # Initialize our application.
-  # fossa = new Fossa(
-  #   host: '127.0.0.1'
-  #   port: '27016'
-  #   options: native_parser: true)
   App.initialize()
   return
 

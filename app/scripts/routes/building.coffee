@@ -17,7 +17,6 @@ define [
     console.log 'initializing the backbone history'
     Backbone.history.start()
     router
-
   initialize()
   # return {
   #  	initialize: initialize
