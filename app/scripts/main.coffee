@@ -17,6 +17,8 @@ require.config
     bootstrap: '../bower_components/sass-bootstrap/dist/js/bootstrap'
     leaflet: '../bower_components/mapbox.js/mapbox'
     d3: '../bower_components/d3/d3'
+    moment: '../bower_components/moment/moment' 
+    datetimepicker: '../bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker'
 require [ 'app' ], (App) ->
   App.initialize()
   return

@@ -13,6 +13,12 @@
         <!-- endbuild -->
         <!-- build:js scripts/vendor/modernizr.js -->
         <script src="bower_components/modernizr/modernizr.js"></script>
+        <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+          <script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
+          <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+          <script type="text/javascript" src="bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js"></script>
+          <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+          <link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" />
         <!-- endbuild -->
     </head>
     <body>
@@ -36,6 +42,23 @@
                         <div id ="map"></div>
                     </div>
                     <div class="col-md-6" id="controls">
+                    <div class="container">
+    <div class='col-sm-6'>Building
+    <div id="info_control"><form class='target'><select class="form-control" id='selectBuilding' class='target'></select></form></div>From<input type='text' class="form-control" id='datetimepicker4'/>To<input type='text' class="form-control" id='datetimepicker5'/><hr><button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Go</button>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker4').datetimepicker({
+               viewMode: 'years',
+               // format: 'DD/MM/YYYY hh:mm:ss'
+            });
+            $('#datetimepicker5').datetimepicker({
+               viewMode: 'years',
+               // format: 'DD/MM/YYYY hh:mm:ss'
+            });
+        });
+    </script>
+</div>
                 </div>
                 </div>
                 

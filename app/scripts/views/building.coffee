@@ -12,10 +12,12 @@ define [
   BuildingView = Backbone.View.extend(
     template: JST['app/scripts/templates/building.hbs']
     el: $('div#map')
-    # events: 'click .path': 'deleteBlog'
-    # deleteBlog: (ev) ->
-    #   console.log 'Calling deleteBlog'
+    events: 'click .button': 'getGo'
+    # getGo: (ev) ->
+    #   console.log 'Calling getGo'
     #   ev.preventDefault()
+
+
     #   id = $(ev.currentTarget).data('blog-id')
     #   blog = new BlogModel(_id: id)
     #   blog.destroy success: ->
@@ -32,14 +34,25 @@ define [
         -71.09
       ], 16)
       buildings = new BuildingCollection
+      
       buildings.fetch
         success: (data) =>
           buildings: data.toJSON()
           # console.log "buildings in initialize", buildings
           @collection = buildings
-          selectEl = L.DomUtil.create("div", "info control")
-          selectEl.innerHTML = "<form class='target'><select id='selectBuilding' class='target'></select></form>"
-          $("#controls").append selectEl
+          # selectEl = L.DomUtil.create("div", "info control")
+          # selectEl.innerHTML =  "<form class='target'></form>"
+          # $("#controls").append selectEl
+          # $(selectEl).append "<select class='form-control' id='selectBuilding' class='target'></select>"
+          # calEl = L.DomUtil.create("input", "form-control")
+          # calEl.innerHTML = "<input type='text' class='form-control' id='datetimepicker'/>"
+          # $("#controls").append calEl
+          # $('document').ready ->
+          #   $("#datetimepicker").datetimepicker({
+          #         viewMode: 'years'
+          #         format: 'MM/YYYY'
+          #       })
+          selectEl = document.getElementById('info_control')
           selEl = document.getElementById('selectBuilding')
           for eachModel in @collection.models
             opt = document.createElement('option')
@@ -48,6 +61,7 @@ define [
           
           leafSelEle = L.DomUtil.get("selectBuilding")
           L.DomEvent.addListener selectEl.firstChild.firstElementChild, "change", ((e) ->
+            
             e.stopPropagation()
             for each in _this.map.featureLayer._geojson.features
               if each.properties.title == @value
@@ -58,8 +72,9 @@ define [
                     featureData.push new L.LatLng(each_model.attributes["Centroid"][1], each_model.attributes["Centroid"][0]) 
             waitForElement = ->
               if typeof featureData != 'undefined'
-                console.log "defined"
-                _this.showD3 featureData 
+                # console.log "defined"
+                _this.zoomToBuilding(featureData)
+                # _this.showD3 featureData 
               else
                 setTimeout (->
                   waitForElement()
@@ -69,11 +84,43 @@ define [
             waitForElement()
 
             )
+          $("button").on('click', (e) ->
+            # console.log "click"
+            # get the input values from the inputs:
+            timeFrom = $('#datetimepicker4').val()
+            timeTo = $('#datetimepicker5').val()
+            # console.log new Date(timeTo).getFullYear()
+            timeToUn = Date.parse(timeTo)/1000
+            timeFromUn = Date.parse(timeFrom)/1000
+
+          )
           @listenTo @collection, 'change', @render
         error: (model, xhr, options) ->
           console.log 'Error occured while retreiving blogs. (Status = ' + xhr.status + ')'
           that.$el.html that.template(title: 'error')
     
+    zoomToBuilding: (building)->
+      console.log "building", building, @marker
+      if @marker is undefined
+        @marker = L.circleMarker(building[0], 10, riseOnHover: true)
+        @marker.on('add', (e) ->
+          console.log "add"
+          console.log e.target
+          )
+        @marker.setStyle(
+          stroke: false
+          fillColor: "red"
+          fillOpacity: 0.8
+          )
+        @marker.addTo(@map)
+      else
+        
+        @marker.setLatLng( building[0])
+
+      
+      # @map.setView( building[0], 18, animate: false)
+      
+      
 
     showD3: (featureData)->
       # try

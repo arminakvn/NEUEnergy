@@ -10,7 +10,8 @@
     "requirejs-text": "~2.0.10",
     "modernizr": "~2.7.1",
     "mapbox.js": "~2.1.5",
-    "d3": "~3.5.4"
+    "d3": "~3.5.4",
+    "eonasdan-bootstrap-datetimepicker": "~4.0.0"
   },
   "devDependencies": {}
 }
